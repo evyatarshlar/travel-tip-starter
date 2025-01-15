@@ -9,7 +9,8 @@ export const utilService = {
     getColors,
     updateQueryParams,
     getDistance,
-    showDistances
+    showDistances,
+    closeDialog
 }
 
 function saveToStorage(key, value) {
@@ -138,4 +139,8 @@ function getDistance(latLng1, latLng2, unit) {
         dist = +dist.toFixed(2)
         return dist
     }
+}
+
+function closeDialog() {
+    document.getElementById('locationDialog').close()
 }

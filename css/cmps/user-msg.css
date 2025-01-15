@@ -11,3 +11,7 @@
     bottom: 10px;
     transition: bottom .5s;
 }
+
+#locationDialog {
+    background: rgb(65, 59, 59);
+}

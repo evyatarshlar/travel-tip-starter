@@ -9,6 +9,7 @@ window.onload = onInit
 window.app = {
     onRemoveLoc,
     onUpdateLoc,
+    onSaveLocation,
     onSelectLoc,
     onPanToUserPos,
     onSearchAddress,
@@ -16,6 +17,7 @@ window.app = {
     onShareLoc,
     onSetSortBy,
     onSetFilterBy,
+    closeDialog,
 }
 
 function onInit() {
@@ -146,21 +148,55 @@ function onPanToUserPos() {
 function onUpdateLoc(locId) {
     locService.getById(locId)
         .then(loc => {
-            const rate = prompt('New rate?', loc.rate)
-            if (rate && rate !== loc.rate) {
-                loc.rate = rate
-                locService.save(loc)
-                    .then(savedLoc => {
-                        flashMsg(`Rate was set to: ${savedLoc.rate}`)
-                        loadAndRenderLocs()
-                    })
-                    .catch(err => {
-                        console.error('OOPs:', err)
-                        flashMsg('Cannot update location')
-                    })
+            const dialog = document.getElementById('locationDialog')
+            
+            document.getElementById('name').value = loc.name
+            document.getElementById('rate').value = loc.rate
+            document.getElementById('address').value = loc.address
+            
+            dialog.dataset.geo = JSON.stringify(loc.geo)
 
-            }
+            dialog.showModal()
         })
+        .catch(err => {
+            console.error('OOPs:', err)
+            flashMsg('Cannot update location')
+        })
+}
+
+function onSaveLocation(event) {
+    event.preventDefault()
+    
+    const dialog = document.getElementById('locationDialog')
+    const form = document.getElementById('locationForm')
+    
+
+    const name = form.name.value
+    const rate = form.rate.value
+    const address = form.address.value
+    const geoData = JSON.parse(dialog.dataset.geo)
+
+    const updatedLoc = {
+        name: name,
+        rate: rate,
+        address: address,
+        geo: geoData 
+    }
+
+    locService.save(updatedLoc)
+        .then(savedLoc => {
+            flashMsg(`Location updated: ${savedLoc.name}`)
+            loadAndRenderLocs()
+            dialog.close()
+        })
+        .catch(err => {
+            console.error('OOPs:', err)
+            flashMsg('Cannot update location')
+        })
+}
+
+function closeDialog() {
+    document.getElementById('locationDialog').close()
 }
 
 function onSelectLoc(locId) {
