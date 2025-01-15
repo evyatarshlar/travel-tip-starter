@@ -26,8 +26,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 
 function panTo({lat, lng, zoom=15}) {
     const laLatLng = new google.maps.LatLng(lat, lng)
-
-    
     gMap.panTo(laLatLng)
     gMap.setZoom(zoom)
 }
