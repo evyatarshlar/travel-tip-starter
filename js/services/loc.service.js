@@ -65,6 +65,8 @@ function getById(locId) {
 }
 
 function remove(locId) {
+    const isConfirmed = window.confirm('Are you sure you want to delete this location?')
+    if (!isConfirmed) return
     return storageService.remove(DB_KEY, locId)
 }
 
