@@ -8,7 +8,9 @@ export const utilService = {
     elapsedTime,
     getColors,
     updateQueryParams,
-    getDistance
+    getDistance,
+    showDistances,
+    closeDialog
 }
 
 function saveToStorage(key, value) {
@@ -94,6 +96,27 @@ function getColors() {
     '#C62828']    
 }
 
+function showDistances() {
+    if (gUserPos === null) {
+        flashMsg('User position is not known yet')
+        return
+    }
+    
+    const locations = [
+        { name: "Location 1", lat: 32.0853, lng: 34.7818 },
+        { name: "Location 2", lat: 31.7683, lng: 35.2137 },
+        { name: "Location 3", lat: 32.1096, lng: 34.8554 }
+    ]
+    
+    locations.forEach(location => {
+        const distance = getDistance(gUserPos, location, 'K')
+        console.log(`Distance to ${location.name}: ${distance} km`)
+        
+
+        flashMsg(`Distance to ${location.name}: ${distance} km`);
+    })
+}
+
 function getDistance(latLng1, latLng2, unit) {
     if ((latLng1.lat == latLng2.lat) && (latLng1.lng == latLng2.lng)) {
         return 0
@@ -116,4 +139,8 @@ function getDistance(latLng1, latLng2, unit) {
         dist = +dist.toFixed(2)
         return dist
     }
+}
+
+function closeDialog() {
+    document.getElementById('locationDialog').close()
 }
