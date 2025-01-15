@@ -241,13 +241,14 @@ function onSetSortBy() {
 
     if (!prop) return
 
-    const sortBy = {}
-    sortBy[prop] = (isDesc) ? -1 : 1
+    // Longer Syntax:
+    // const sortBy = {}
+    // sortBy[prop] = (isDesc) ? -1 : 1
 
     // Shorter Syntax:
-    // const sortBy = {
-    //     [prop] : (isDesc)? -1 : 1
-    // }
+    const sortBy = {
+        [prop] : (isDesc)? -1 : 1
+    }
 
     locService.setSortBy(sortBy)
     loadAndRenderLocs()
