@@ -11,6 +11,8 @@
 <body>
     <header>
         <h1>TravelTip</h1>
+        <div id="distance-info">
+        </div>
         <section class="selected-loc">
             <h2>Location: <span class="loc-name"></span> <span class="loc-rate"></span></h2>
             <h4 class="loc-address"></h4>
@@ -21,8 +23,8 @@
         <form class="form-search" onsubmit="app.onSearchAddress(event)">
             <input type="text" name="address" placeholder="Search address" />
             <button title="Search">🔍</button>
-            <button type="button" title="My Position" onclick="app.onPanToUserPos()" class="btn-user-pos">&nbsp;
-            </button>
+            <button type="button" title="My Position" onclick="app.onPanToUserPos()" class="btn-user-pos">&nbsp;</button>
+        </button>
         </form>
     </header>
     <main>

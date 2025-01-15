@@ -8,7 +8,8 @@ export const utilService = {
     elapsedTime,
     getColors,
     updateQueryParams,
-    getDistance
+    getDistance,
+    showDistances
 }
 
 function saveToStorage(key, value) {
@@ -92,6 +93,27 @@ function getColors() {
     '#E53935',
     '#D32F2F',
     '#C62828']    
+}
+
+function showDistances() {
+    if (gUserPos === null) {
+        flashMsg('User position is not known yet')
+        return
+    }
+    
+    const locations = [
+        { name: "Location 1", lat: 32.0853, lng: 34.7818 },
+        { name: "Location 2", lat: 31.7683, lng: 35.2137 },
+        { name: "Location 3", lat: 32.1096, lng: 34.8554 }
+    ]
+    
+    locations.forEach(location => {
+        const distance = getDistance(gUserPos, location, 'K')
+        console.log(`Distance to ${location.name}: ${distance} km`)
+        
+
+        flashMsg(`Distance to ${location.name}: ${distance} km`);
+    })
 }
 
 function getDistance(latLng1, latLng2, unit) {

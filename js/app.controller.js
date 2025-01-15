@@ -127,6 +127,11 @@ function loadAndRenderLocs() {
 function onPanToUserPos() {
     mapService.getUserPosition()
         .then(latLng => {
+            console.log(latLng)
+            if (isNaN(latLng.lat) || isNaN(latLng.lng)) {
+                flashMsg('Invalid position data')
+                return
+            }
             mapService.panTo({ ...latLng, zoom: 15 })
             unDisplayLoc()
             loadAndRenderLocs()
